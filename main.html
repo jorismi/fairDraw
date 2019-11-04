@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules/animate.css/animate.min.css">
+    <title>Tirage au sort PSC</title>
+</head>
+
+<header>
+    <h1> Tirage au sort pour la PSC </h1>
+</header>
+
+<body>
+    <section class="conteneurPrincipal">
+        <div class="zoneTirage">
+            <span class="graphique">l'heureux élu est : </span>
+            <h1 class="nomElu">
+                <span id="eluConteneur">
+                    <span id="letters" class="letters">Mystere...</span>
+                </span>
+            </h1>
+
+            <article class="section_boutons">
+                <button id="btn_tirage">Rien ne va plus, les jeux sont fait!</button>
+                <button id="btn_ajoutParticipant">Ajouter un participant</button>
+                <button id="btn_RAZListes">Remettre à zéro la liste de participants</button>
+            </article>
+        </div>
+        <!--<aside class="aside_listeParticipants">
+            <h2> Courageux volontaires </h2>
+            <div id="listeParticipants"></div>
+        </aside>
+        <aside class="aside_listeElus">
+            <h2> Précédents elus </h2>
+            <div id="listeElus"></div>
+        </aside>-->
+
+        <div id="containerParticipants">
+            <h1> Tableau des courageux volontaires </h1>
+        </div>
+    </section>
+
+    <canvas id="confettiCanvas" style="display:none;"></canvas>
+
+    <script src="node_modules/confetti-js/dist/index.min.js"></script>
+    <script src="node_modules/animate.css/animate.min.css"></script>
+    <script src="node_modules/sweetalert2-8.15.2/package/dist/sweetalert2.all.min.js"></script>
+    <script src="jquery-3.4.1.js"></script>
+    <script src="Participant.js"></script>
+    <script src="mainScript.js"></script>
+</body>
+<footer></footer>
+
+</html>
