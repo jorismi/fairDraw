@@ -65,7 +65,7 @@ function MAJTabParticipants() {
   localStorage.setItem("participants", JSON.stringify(tab_participants));
   MAJAffichageTab();
 }
-
+/*test*/
 async function ajoutParticipant() {
   const { value: nomParticipant } = await Swal.fire({
     title: 'Veuillez indiquer le nom du courageux volontaire',
