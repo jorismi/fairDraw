@@ -1,5 +1,11 @@
 /* TODO */
-// Remplacer les listes de volontaires et d'élus par un tableau de card 
+// implémenter la fonction editUser
+// Améliorer le design!
+
+/* V2 */
+// gérer le tremblement lors du survol des boutons
+// Ajouter une liste pré-configuré pour repartir de zéro
+// Améliorer encore le design!
 
 var tab_participants = [];
 var tab_modeleParticipant = [];
@@ -9,6 +15,7 @@ var tab_modeleParticipant = [];
 document.getElementById("btn_tirage").addEventListener("click", lancerTirage);
 document.getElementById("btn_ajoutParticipant").addEventListener("click", ajoutParticipant);
 document.getElementById("btn_RAZListes").addEventListener("click", RAZListes);
+
 // Recuperation des listes de participants dans le stockage local
 tab_participants = JSON.parse(localStorage.getItem("participants") || "[]");
 MAJAffichageTab();
@@ -49,15 +56,27 @@ function lancerTirage() {
 }
 
 function MAJAffichageTab() {
-  document.getElementById("containerParticipants").innerHTML = '<h1> Tableau des courageux volontaires </h1>';
+  document.getElementById("containerParticipants").innerHTML = '<h1 class="participantCardTitle"> Tableau des courageux volontaires </h1>';
   tab_participants.forEach(element => {
     document.getElementById("containerParticipants").innerHTML += '<div class="carteParticipant">'
-      + '<img class="iconeAvatar" src="' + (element.estElimine == true ? "ressources/eliminated.png" : "ressources/avatarNeutre.png") + '" alt="Avatar" style="width:100%">'
-      + '<div class="container">'
-      + '  <h1><b>' + element.nom + '</b></h1>'
-      + '</div>'
+      + ' <img class="iconeAvatar" src="' + (element.estElimine == true ? "ressources/eliminated.png" : "ressources/avatarNeutre.png") + '" alt="Avatar">'
+      + ' <div class="infoContainer">'
+      + '   <button class="editUserbutton"><i class="fas fa-user-edit"></i></button>'
+      + '   <span class="avatarName">' + element.nom + '</span>'
+      + '   <button class="deleteUserbutton"><i class="fas fa-user-slash"></i></button>'
+      + ' </div>'
       + '</div>'
   });
+  /* Attachement des eventListener a tous les editUserButton */
+  const editButtons = document.querySelectorAll('.editUserbutton')
+  editButtons.forEach(function (currentBtn) {
+    currentBtn.addEventListener('click', editUser);
+  })
+  /* Attachement des eventListener a tous les deleteUserButton */
+  const deleteButtons = document.querySelectorAll('.deleteUserbutton')
+  deleteButtons.forEach(function (currentBtn) {
+    currentBtn.addEventListener('click', deleteUser);
+  })
 }
 
 // MAJ du tableau des participants et de l'affichage de la liste des participants
@@ -65,7 +84,7 @@ function MAJTabParticipants() {
   localStorage.setItem("participants", JSON.stringify(tab_participants));
   MAJAffichageTab();
 }
-/*test*/
+
 async function ajoutParticipant() {
   const { value: nomParticipant } = await Swal.fire({
     title: 'Veuillez indiquer le nom du courageux volontaire',
@@ -117,9 +136,7 @@ function RAZListes() {
     }).then((result) => {
       if (result.value) {
         tab_participants = [];
-        localStorage.setItem("participants", JSON.stringify(tab_participants));
         MAJTabParticipants();
-        MAJTabElus();
         Swal.fire(
           'La liste a bien été réinitialisée!',
           '',
@@ -129,6 +146,49 @@ function RAZListes() {
     })
   }
 }
+
+function editUser() {
+  alert("hello" + this);
+}
+
+function deleteUser() {
+  var currentUserName = event.target.parentNode.parentNode.querySelector('.avatarName').innerHTML;
+  
+  Swal.fire({
+    title: 'Voulez vous vraiment supprimer '+ currentUserName +' de la liste?',
+    showCancelButton: true,
+    imageUrl: 'ressources/deleteUser.gif',
+    imageWidth: 500,
+    imageHeight: 199,
+    imageAlt: 'areYouSureImage',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    cancelButtonText: 'oups, missclick!',
+    confirmButtonText: 'Absolument sûr!'
+  }).then((result) => {
+    if (result.value) {
+      const index = tab_participants.indexOfName(currentUserName);
+      if (index > -1) {
+        tab_participants.splice(index, 1);
+      }
+      MAJTabParticipants();
+      Swal.fire(
+        currentUserName +' a bien été évincé!',
+        '',
+        'success'
+      )
+    }
+  })
+}
+
+/* Custom function indexOf to handle complex array type */
+Array.prototype.indexOfName = function (partName) {
+  for (var i = 0; i < this.length; i++)
+    if (this[i].nom === partName)
+      return i;
+  return -1;
+}
+
 
 // Joue l'animation d'appararition du nom de l'elu
 function afficherElu(elu) {
