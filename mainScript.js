@@ -1,11 +1,13 @@
 /* TODO */
-// implémenter la fonction editUser
+// Ajouter une liste pré-configuré pour repartir de zéro
 // Améliorer le design!
 
 /* V2 */
+// Remplacer le curseur de la souris par un truc festif pendant les confettis
+// Mieux gérer la distributon des cartes
+// Gestion du zoom/dezoom
 // gérer le tremblement lors du survol des boutons
-// Ajouter une liste pré-configuré pour repartir de zéro
-// Améliorer encore le design!
+// Améliorer encore le design! (faire un style de tableau en liège avec les cartes épinglés)
 
 var tab_participants = [];
 var tab_modeleParticipant = [];
@@ -15,7 +17,6 @@ var tab_modeleParticipant = [];
 document.getElementById("btn_tirage").addEventListener("click", lancerTirage);
 document.getElementById("btn_ajoutParticipant").addEventListener("click", ajoutParticipant);
 document.getElementById("btn_RAZListes").addEventListener("click", RAZListes);
-
 // Recuperation des listes de participants dans le stockage local
 tab_participants = JSON.parse(localStorage.getItem("participants") || "[]");
 MAJAffichageTab();
@@ -59,7 +60,7 @@ function MAJAffichageTab() {
   document.getElementById("containerParticipants").innerHTML = '<h1 class="participantCardTitle"> Tableau des courageux volontaires </h1>';
   tab_participants.forEach(element => {
     document.getElementById("containerParticipants").innerHTML += '<div class="carteParticipant">'
-      + ' <img class="iconeAvatar" src="' + (element.estElimine == true ? "ressources/eliminated.png" : "ressources/avatarNeutre.png") + '" alt="Avatar">'
+      + ' <img class="iconeAvatar" src="' + (element.estElimine == true ? "ressources/avatarEliminated.png" : "ressources/avatarNeutre.png") + '" alt="Avatar">'
       + ' <div class="infoContainer">'
       + '   <button class="editUserbutton"><i class="fas fa-user-edit"></i></button>'
       + '   <span class="avatarName">' + element.nom + '</span>'
@@ -147,8 +148,26 @@ function RAZListes() {
   }
 }
 
-function editUser() {
-  alert("hello" + this);
+async function editUser() {
+  var currentUserName = event.target.parentNode.parentNode.querySelector('.avatarName').innerHTML;
+  const { value: nomParticipant } = await Swal.fire({
+    title: 'Veuillez indiquer le nouveau nom du volontaire',
+    input: 'text',
+    inputPlaceholder: 'Nouveau nom du volontaire',
+    imageUrl: 'ressources/newName.gif',
+    imageWidth: 500,
+    imageHeight: 290,
+    imageAlt: 'volunteerImage',
+    inputValidator: (value) => {
+      if (!value) {
+        return 'Il semblerait que vous ayez oublié de renseigner le nouveau nom du volontaire.'
+      }
+    }
+  })
+  if (nomParticipant) {
+    tab_participants[tab_participants.indexOfName(currentUserName)].nom=nomParticipant;
+    MAJTabParticipants();
+  }
 }
 
 function deleteUser() {
@@ -228,6 +247,7 @@ confetti.render();
 
 // Affiche les conffetis puis les fais disparaitre
 function lancerConfetti() {
+  document.body.style.cursor = "wait";
   $("#confettiCanvas").fadeIn({
     duration: 1000
     , complete: function () { setTimeout(arreterConfetti, 3000); }
@@ -235,6 +255,7 @@ function lancerConfetti() {
 
   function arreterConfetti() {
     $("#confettiCanvas").fadeOut(1000);
+    document.body.style.cursor = "default";
   }
 }
 /********* FIN FONCTIONS ***********/

@@ -5,15 +5,4 @@ class Participant {
         this.estElimine = false;
     }
 
-    getNom() {
-        return this.nom;
-    }
-
-    getEstElimine() {
-        return this.estElimine;
-    }
-
-    setEstElimine(estElimine) {
-        this.estElimine = estElimine;
-    }
 }
