@@ -1,5 +1,6 @@
 /* TODO */
 // Gérer le retour à la ligne si le nom est trop long
+// Changer l'icone de l'onglet
 // Améliorer le design!
 
 /* V2 */
@@ -223,7 +224,7 @@ async function editUser() {
   const { value: nomParticipant } = await Swal.fire({
     title: 'Veuillez indiquer le nouveau nom du volontaire',
     input: 'text',
-    inputPlaceholder: 'Nouveau nom du volontaire',
+    inputValue: currentUserName,
     imageUrl: 'ressources/newName.gif',
     imageWidth: 500,
     imageHeight: 290,
