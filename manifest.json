@@ -1,11 +1,11 @@
 {
-	"name": "Tirage au sort PSC",
+	"name": "Tirage au sort",
 	"version": "1.0",
 	"description": "Enchainer les tirages au sort en retirant les précédents élus au fur et à mesure afin d'éviter toute injustice",
 	"options_page":"page_options.html",
 	"browser_action": {
 		"default_icon": "ressources/icon.png",
-		"default_title": "Tirage au sort PSC",
+		"default_title": "Tirage au sort",
 		"default_popup": "popup.html"
 	},
 	"permissions":[

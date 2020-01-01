@@ -1,8 +1,9 @@
 /* TODO */
-// Ajouter l'option de remise à zéro des éliminations dans "remise à zero"
+// Gérer le retour à la ligne si le nom est trop long
 // Améliorer le design!
 
 /* V2 */
+// Trier les cartes par ordre alphabétique
 // Supprimer les éliminations une par une
 // Ajouter une liste pré-configuré pour repartir de zéro
 // Remplacer le curseur de la souris par un truc festif pendant les confettis
@@ -60,7 +61,7 @@ function lancerTirage() {
 }
 
 function MAJAffichageTab() {
-  document.getElementById("containerParticipants").innerHTML = '<h1 class="participantCardTitle"> Tableau des courageux volontaires </h1>';
+  document.getElementById("containerParticipants").innerHTML = '<h1 class="participantCardTitle divider line glow"> Tableau des courageux volontaires </h1>';
   tab_participants.forEach(element => {
     document.getElementById("containerParticipants").innerHTML += '<div class="carteParticipant">'
       + ' <img class="iconeAvatar" src="' + (element.estElimine == true ? "ressources/avatarEliminated.png" : "ressources/avatarNeutre.png") + '" alt="Avatar">'

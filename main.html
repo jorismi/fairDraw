@@ -6,28 +6,27 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="node_modules/animate.css/animate.min.css">
     <link href="node_modules/fontawesome-free-5.12.0-web/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Vollkorn&display=swap" rel="stylesheet">
     <title>Tirage au sort PSC</title>
 </head>
 
 <header>
-    <h1> Tirage au sort équitable pour la PSC </h1>
+    <h1 > Tirage au sort équitable </h1>
 </header>
 
 <body>
     <section id="conteneurPrincipal" class="conteneurPrincipal">
         <div id="zoneTirage">
             <h1 class="nomElu">
-                <span id="eluConteneur">
-                    l'heureux élu est : <span id="letters" class="letters">Mystere...</span>
-                </span>
+                <span id="eluConteneur"> L'heureux élu est : <h1 class="rainbow letters" id="letters">Mystere...</h1></span>
             </h1>
 
-            <article class="section_boutons">
+            <article class="section_boutons"><span>
                 <button id="btn_tirage">Rien ne va plus, les jeux sont fait!</button>
                 <button id="btn_ajoutParticipant">Ajouter un participant</button>
                 <button id="btn_RAZEliminated">Remettre en jeu les participants éliminés</button>
                 <button id="btn_RAZListe">Remettre à zéro la liste de participants</button>
-            </article>
+            </span></article>
         </div>
 
         <div id="containerParticipants"></div>
