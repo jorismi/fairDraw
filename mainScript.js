@@ -1,8 +1,10 @@
 /* TODO */
-// Ajouter une liste pré-configuré pour repartir de zéro
+// Ajouter l'option de remise à zéro des éliminations dans "remise à zero"
 // Améliorer le design!
 
 /* V2 */
+// Supprimer les éliminations une par une
+// Ajouter une liste pré-configuré pour repartir de zéro
 // Remplacer le curseur de la souris par un truc festif pendant les confettis
 // Mieux gérer la distributon des cartes
 // Gestion du zoom/dezoom
@@ -16,7 +18,8 @@ var tab_modeleParticipant = [];
 // Mise en place des listener
 document.getElementById("btn_tirage").addEventListener("click", lancerTirage);
 document.getElementById("btn_ajoutParticipant").addEventListener("click", ajoutParticipant);
-document.getElementById("btn_RAZListes").addEventListener("click", RAZListes);
+document.getElementById("btn_RAZEliminated").addEventListener("click", RAZEliminated);
+document.getElementById("btn_RAZListe").addEventListener("click", RAZListe);
 // Recuperation des listes de participants dans le stockage local
 tab_participants = JSON.parse(localStorage.getItem("participants") || "[]");
 MAJAffichageTab();
@@ -107,8 +110,74 @@ async function ajoutParticipant() {
   }
 }
 
-// Remise a zero des listes
-function RAZListes() {
+// On remet tous les participants en jeu 
+function RAZEliminated() {
+  if (tab_participants == 0) {
+    Swal.fire({
+      title: 'Impossible de remettre en jeu les participants s\'il n\'y en a pas!',
+      confirmButtonText: 'J\'ai compris mon erreur...',
+      animation: false,
+      customClass: {
+        popup: 'animated lightSpeedIn faster'
+      },
+      imageUrl: 'ressources/aloneBis.gif',
+      imageWidth: 496,
+      imageHeight: 248,
+      imageAlt: 'aloneBisImage'
+    })
+  } else {
+    /* On vérifie si des personnes sont éliminées */
+    var isEliminated = false;
+    tab_participants.forEach(currentPart => {
+      if (currentPart.estElimine) {
+        isEliminated = true;
+      }
+    });
+    if (isEliminated) { // Si on a au moins une personne eliminée
+      Swal.fire({
+        title: 'Voulez vous vraiment remettre en jeu tous les volontaires?',
+        showCancelButton: true,
+        imageUrl: 'ressources/backInGame.gif',
+        imageWidth: 220,
+        imageHeight: 204,
+        imageAlt: 'backInGameImage',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'En fait non!',
+        confirmButtonText: 'Oui je suis sûr!'
+      }).then((result) => {
+        if (result.value) {
+          tab_participants.forEach(currentPart => {
+            currentPart.estElimine = false
+          });
+          MAJTabParticipants();
+          Swal.fire(
+            'Tous les particpants sont bien de retour dans la partie!',
+            '',
+            'success'
+          )
+        }
+      })
+    } else { // S'il n'y avait personne d'éliminé 
+      Swal.fire({
+        title: 'Personne n\'a encore été éliminé!',
+        confirmButtonText: 'Ah oui, bien vu!',
+        animation: false,
+        customClass: {
+          popup: 'animated lightSpeedIn faster'
+        },
+        imageUrl: 'ressources/noOneEliminated.gif',
+        imageWidth: 498,
+        imageHeight: 229,
+        imageAlt: 'noOneEliminatedImage'
+      })
+    }
+
+  }
+}
+
+// Remise a zero de la liste de participant
+function RAZListe() {
   if (tab_participants == 0) {
     Swal.fire({
       title: 'Les listes des participants est déjà vide!',
@@ -165,16 +234,16 @@ async function editUser() {
     }
   })
   if (nomParticipant) {
-    tab_participants[tab_participants.indexOfName(currentUserName)].nom=nomParticipant;
+    tab_participants[tab_participants.indexOfName(currentUserName)].nom = nomParticipant;
     MAJTabParticipants();
   }
 }
 
 function deleteUser() {
   var currentUserName = event.target.parentNode.parentNode.querySelector('.avatarName').innerHTML;
-  
+
   Swal.fire({
-    title: 'Voulez vous vraiment supprimer '+ currentUserName +' de la liste?',
+    title: 'Voulez vous vraiment supprimer ' + currentUserName + ' de la liste?',
     showCancelButton: true,
     imageUrl: 'ressources/deleteUser.gif',
     imageWidth: 500,
@@ -192,7 +261,7 @@ function deleteUser() {
       }
       MAJTabParticipants();
       Swal.fire(
-        currentUserName +' a bien été évincé!',
+        currentUserName + ' a bien été évincé!',
         '',
         'success'
       )

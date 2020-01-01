@@ -49,7 +49,7 @@ h1{
   text-align: center;
 }
 
-#btn_RAZListes, #btn_ajoutParticipant, #btn_tirage {
+#btn_tirage, #btn_ajoutParticipant, #btn_RAZListe, #btn_RAZEliminated {
   color: #494949 !important;
   text-transform: uppercase;
   background: #ffffff;
@@ -64,7 +64,7 @@ h1{
 }
 
 /* Global variable for button animation */
-#btn_tirage:hover, #btn_ajoutParticipant:hover, #btn_RAZListes:hover {
+#btn_tirage:hover, #btn_ajoutParticipant:hover, #btn_RAZListe:hover, #btn_RAZEliminated:hover {
   color: white !important;
   border-radius: 50px;
   font-weight: bold;
@@ -84,13 +84,19 @@ h1{
 }
 
 /* Specific color for button hovering */
-#btn_RAZListes:hover {
+#btn_RAZListe:hover {
   border-color: #df5e62 !important;
   background-color: #df5e62 !important;
 }
 
+/* Specific color for button hovering */
+#btn_RAZEliminated:hover {
+  border-color: #ff9659 !important;
+  background-color: #ff9659 !important;
+}
+
 /* Remove blue border when button is clicked */
-#btn_tirage:focus, #btn_ajoutParticipant:focus, #btn_RAZListes:focus {
+#btn_tirage:focus, #btn_ajoutParticipant:focus, #btn_RAZListe:focus, #btn_RAZEliminated:focus {
   outline:0;
 }
 
