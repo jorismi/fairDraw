@@ -1,9 +1,9 @@
 /* TODO */
-// Gérer le retour à la ligne si le nom est trop long
-// Changer l'icone de l'onglet
 // Améliorer le design!
 
 /* V2 */
+// Mettre une option pour choisir le nombre de carte par ligne
+// Positionner correctement les boutons si le nom est sur 2 lignes
 // Trier les cartes par ordre alphabétique
 // Supprimer les éliminations une par une
 // Ajouter une liste pré-configuré pour repartir de zéro
